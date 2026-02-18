@@ -41,7 +41,7 @@ router.patch('/posts/:id', async (req, res) => {
     const post = await Post.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updated_at: new Date() },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!post) return res.status(404).json({ error: 'Post not found' });
     res.json(post);
@@ -55,7 +55,7 @@ router.post('/posts/:id/publish', async (req, res) => {
     const post = await Post.findByIdAndUpdate(
       req.params.id,
       { ...req.body, status: 'published', updated_at: new Date() },
-      { new: true }
+      { returnDocument: 'after' }
     );
     if (!post) return res.status(404).json({ error: 'Post not found' });
     res.json(post);
