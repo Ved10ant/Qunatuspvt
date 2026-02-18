@@ -1,3 +1,7 @@
+import { TableNode, TableCellNode, TableRowNode } from '@lexical/table';
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
+import { MathNode } from '../nodes/MathNode';
+import MathPlugin from '../plugins/MathPlugin';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
@@ -20,12 +24,14 @@ const theme = {
     list: {
         ul: 'list-disc ml-6 mb-2',
         ol: 'list-decimal ml-6 mb-2',
-    }
+    },
+    table: 'border-collapse border-spacing-0 overflow-scroll border border-gray-300 my-4',
+    tableCell: 'border border-gray-300 p-2 min-w-[75px]',
+    tableCellHeader: 'bg-gray-100 font-bold',
 };
 
 const Editor: React.FC = () => {
     const { currentPost, updatePostContent, setIsSaving, setLastSaved } = useEditorStore();
-    // const [editorState, setEditorState] = useState<string | null>(null);
     const saveTimeoutRef = useRef<any>(null);
 
     useEffect(() => {
@@ -63,7 +69,7 @@ const Editor: React.FC = () => {
         namespace: 'MyEditor',
         theme,
         onError: (error: Error) => console.error(error),
-        nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode],
+        nodes: [HeadingNode, QuoteNode, ListNode, ListItemNode, TableNode, TableCellNode, TableRowNode, MathNode],
         editorState: currentPost.content === '{}' ? undefined : currentPost.content,
     };
 
@@ -98,6 +104,8 @@ const Editor: React.FC = () => {
                         />
                     </div>
                     <HistoryPlugin />
+                    <TablePlugin />
+                    <MathPlugin />
                     <OnChangePlugin onChange={handleOnChange} />
                 </div>
             </LexicalComposer>
