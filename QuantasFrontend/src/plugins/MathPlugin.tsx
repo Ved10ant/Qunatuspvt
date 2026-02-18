@@ -1,5 +1,5 @@
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { useEffect } from 'react';
+import { useEffect, type JSX } from 'react';
 import { $createMathNode, MathNode } from '../nodes/MathNode';
 import { $getSelection, $isRangeSelection, COMMAND_PRIORITY_EDITOR, createCommand } from 'lexical';
 import type { LexicalCommand } from 'lexical';
